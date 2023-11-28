@@ -3,9 +3,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="mt-4 text-center"> 
-        <x-primary-button class="ms-3"> 
-            <a href="{{ route('register') }}" >Quiero registrarme.</a>
-        </x-primary-button>
+       <p>Admin Login</p>
     </div>
     
 
