@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang=""{{'app.local'}}"">
+<html lang=""{{ 'app.local' }}"">
 
 <head>
     <meta charset="UTF-8">
@@ -31,7 +31,7 @@
                                     <a class="nav-link" href="{{ route('web.index') }}">Productos</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/carrito') }}">Carrito</a>
+                                    <a class="nav-link" href="{{ route('cart.view') }}">Carrito</a>
                                 </li>
                             </ul>
                         </div>
@@ -53,7 +53,11 @@
                         <h3 class="card-title">{{ $product->name }}</h3>
                         <p class="card-text">{{ $product->description }}</p>
                         <p class="card-text">Precio: ${{ $product->price }}</p>
-                        <a href="#" class="btn btn-primary">Agregar al Carrito</a>
+                        <form action="{{ url('/cart/add') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <button type="submit">Agregar al carrito</button>
+                        </form>
                     </div>
                 </div>
             </div>

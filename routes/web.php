@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BackofficeController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/', function () {
@@ -20,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 Route::middleware('admin')->group(function () {
@@ -29,11 +30,15 @@ Route::middleware('admin')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 ///////////////////////////////////////////////////
 
 Route::get('/', [ProductController::class, 'index'])->name('web.index');
 Route::get('product/{id}', [ProductController::class, 'show'])->name('web.show')->middleware('auth');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/view', [CartController::class, 'viewCart'])->name('cart.view');
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/buy', [CartController::class, 'buy'])->name('cart.buy');
+
 
 Route::get('/adm', [BackofficeController::class, 'index'])->name('backoffice.index');
 Route::get('adm/create', [BackofficeController::class, 'create'])->name('backoffice.create');
