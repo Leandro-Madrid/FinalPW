@@ -74,9 +74,11 @@
 
                         </div>
                         <div class="form-group my-3">
-                            <label for="image">URL de la imagen</label>
-                            <input type="text" class="form-control" id="image" name="image"
-                                value="{{ $product->image }}">
+                            <label for="image">Imagen</label>
+                            @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="Imagen del producto" style="max-width: 100px; max-height: 100px;">
+                            @endif
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
                         </div>
                         <button type="submit" class="btn btn-primary my-3">Actualizar Producto</button>
                     </form>

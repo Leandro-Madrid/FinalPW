@@ -47,8 +47,8 @@
     <main>
         <div class="container text-center mt-3">
             <div class="d-flex justify-content-center mx-auto">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{ $product->image }}" alt="Imagen del producto">
+                <div class="card" style="width: 25rem;">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="Imagen del producto">
                     <div class="card-body">
                         <h3 class="card-title">{{ $product->name }}</h3>
                         <p class="card-text">{{ $product->description }}</p>
@@ -56,7 +56,7 @@
                         <form action="{{ url('/cart/add') }}" method="post">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit">Agregar al carrito</button>
+                            <button type="submit " class="btn btn-success">Agregar al carrito</button>
                         </form>
                     </div>
                 </div>

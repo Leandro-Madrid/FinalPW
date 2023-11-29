@@ -64,8 +64,9 @@
                         <tbody>
                             @forelse ($cartProducts as $product)
                                 <tr data-product-id="{{ $product->id }}">
-                                    <td class="align-middle text-center"><img src="{{ $product->image }}"
-                                            alt="Imagen del producto" class="img-thumbnail py-3 mt-3"></td>
+                                    <td class="align-middle text-center">
+                                        <img src="{{ asset('storage/' . $product->image) }}" alt="Imagen del producto" style="max-width: 100px; max-height: 100px;">
+                                    </td>
                                     <td class="align-middle text-center">{{ $product->name }}</td>
                                     <td class="align-middle text-center">{{ $product->description }}</td>
                                     <td class="align-middle text-center">{{ $product->price }}</td>
@@ -80,9 +81,9 @@
                     </table>
                 </div>
             </div>
-            <div class="text-end">
-                <p class="fw-bold">Precio Total: ${{ $totalPrice }}</p>
-                <p>Gracias por su compra !!</p>
+            <div class="container mt-4 p-3 bg-light rounded">
+                <p class="h3 text-success">¡Gracias por su compra!</p>
+                <p class="h4">Precio Total: ${{ $totalPrice }}</p>
             </div>
         </div>
     </main>

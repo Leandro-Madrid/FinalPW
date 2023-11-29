@@ -62,8 +62,9 @@
                         <tbody>
                             @forelse ($products as $product)
                                 <tr>
-                                    <td class="align-middle text-center"><img src="{{ $product->image }}" alt="Imagen del producto"
-                                            class="img-thumbnail py-3 mt-3"></td>
+                                    <td class="align-middle text-center">
+                                        <img src="{{ asset('storage/' . $product->image) }}" alt="Imagen del producto" style="max-width: 100px; max-height: 100px;">
+                                    </td>
                                     <td class="align-middle text-center">{{ $product->name }}</td>
                                     <td class="align-middle text-center">{{ $product->description }}</td>
                                     <td class="align-middle text-center">{{ $product->price }}</td>

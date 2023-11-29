@@ -70,9 +70,8 @@
                             </select>
                         </div>
                         <div class="form-group my-3">
-                            <label for="image">URL de la imagen</label>
-                            <input type="text" class="form-control" id="image" name="image"
-                                placeholder="Ingrese la URL de la imagen">
+                            <label for="image">Imagen</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
                         </div>
                         <button type="submit" class="btn btn-primary my-3">Agregar Producto</button>
                     </form>

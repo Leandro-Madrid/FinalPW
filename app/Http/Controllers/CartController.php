@@ -61,5 +61,6 @@ class CartController extends Controller
         $totalPrice = $cartProducts->sum('price');
 
         return view('cart.buy', ['cartProducts' => $cartProducts, 'totalPrice' => $totalPrice]);
+        
     }
 }

@@ -23,20 +23,24 @@ class BackofficeController extends Controller
 
     public function store(Request $request)
     {
+        
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'category' => 'nullable',
-            'image' => 'nullable',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $product = new Product;
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-        $product->category_id = $request->input('category_id', null);
-        $product->image = $request->input('image') ?: 'https://picsum.photos/50';
+        $imagePath = $request->file('image')->store('images', 'public');
+
+        $product = new Product([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'category_id' => $request->input('category_id'),
+            'image' => $imagePath,
+        ]);
 
         $product->save();
 
@@ -52,31 +56,36 @@ class BackofficeController extends Controller
 
 
     public function update(Request $request, $id)
-    {
-        
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'category' => 'nullable',
-            'image' => 'nullable',
-        ]);
+{
+    $request->validate([
+        'name' => 'required',
+        'description' => 'required',
+        'price' => 'required|numeric',
+        'category_id' => 'nullable',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        $product = Product::find($id);
+    $product = Product::find($id);
 
-        if (!$product) {
-            return redirect()->route('backoffice.index');
-        }
-
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-        $product->category_id = $request->input('category_id');
-        $product->image = $request->input('image');
-        $product->save();
-
+    if (!$product) {
         return redirect()->route('backoffice.index');
     }
+
+    $product->name = $request->input('name');
+    $product->description = $request->input('description');
+    $product->price = $request->input('price');
+    $product->category_id = $request->input('category_id');
+
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('public/images');
+        $product->image = str_replace('public/', '', $imagePath);
+    }
+
+    $product->save();
+
+    return redirect()->route('backoffice.edit', ['id' => $product->id])->with('success', 'Producto actualizado exitosamente');
+}
+
 
     public function destroy($id)
     {
