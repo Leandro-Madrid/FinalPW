@@ -83,7 +83,7 @@ class BackofficeController extends Controller
 
     $product->save();
 
-    return redirect()->route('backoffice.edit', ['id' => $product->id])->with('success', 'Producto actualizado exitosamente');
+    return redirect()->route('backoffice.index', ['id' => $product->id]);
 }
 
 

@@ -28,7 +28,7 @@
                         <div class="collapse navbar-collapse" id="navbarResponsive">
                             <ul class="navbar-nav ms-auto my-2 my-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link link-success" href="{{ route('web.index') }}">SEGUR COMPRANDO</a>
+                                    <a class="nav-link link-success" href="{{ route('web.index') }}">SEGUIR COMPRANDO</a>
                                 </li>
 
                             </ul>
