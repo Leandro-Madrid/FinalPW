@@ -89,19 +89,16 @@
                 </div>
             </div>
 
-            <div class="container d-flex justify-content-between align-items-center mt-4  p-3 bg-light rounded"">
-                <div>
-                    <p class="h4">Precio Total: ${{ $totalPrice }}</p>
-                </div>
-                <div>
+            @if(count($cartProducts) > 0)
+                <div class="container d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded">  
+                    <p class="h4">Precio Total: $ {{ $cartProducts->sum('price') }}</p> 
                     <form action="{{ route('cart.buy') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success">Comprar</button>
-                    </form>
+                    </form>  
                 </div>
-            </div>
+             @endif
             
-
         </div>
     </main>
 

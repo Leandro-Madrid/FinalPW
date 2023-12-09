@@ -81,9 +81,9 @@
                     </table>
                 </div>
             </div>
-            <div class="container mt-4 p-3 bg-light rounded">
+            <div class="container d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded">
                 <p class="h3 text-success">¡Gracias por su compra!</p>
-                <p class="h4">Precio Total: ${{ $totalPrice }}</p>
+                <p class="h4">Precio Total: $ {{ $cartProducts->sum('price') }}</p>
             </div>
         </div>
     </main>

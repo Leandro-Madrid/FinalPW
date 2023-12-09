@@ -12,22 +12,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        $selectedCategory = $request->session()->get('selectedCategory');
-
-        if ($request->has('category_id')) {
-            $selectedCategory = $request->input('category_id');
-            $request->session()->put('selectedCategory', $selectedCategory);
-        }
-
+     
         $productsQuery = Product::query();
 
-        if ($selectedCategory) {
-            $productsQuery->where('category_id', $selectedCategory);
+        if ($request->has('category_id')) {
+            $productsQuery->where('category_id', $request->input('category_id'));
         }
 
-        $products = $productsQuery->paginate(6);
+        $products = $productsQuery->paginate(1);
 
-        return view('web.index', compact('products', 'categories', 'selectedCategory'));
+        return view('web.index', compact('products', 'categories'));
     }
 
     public function show($id)

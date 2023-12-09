@@ -10,57 +10,51 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $productId = $request->input('product_id');
+        $product = Product::find($productId);
 
-        $cart = $request->session()->get('cart', []);
+        if ($product) {
+            $cart = $request->session()->get('cart', []);
+            $cart[] = $productId;
+            $request->session()->put('cart', $cart);
+        }
 
-        $cart[] = $productId;
-
-        $request->session()->put('cart', $cart);
-
-        $cartProducts = Product::whereIn('id', $cart)->get();
-
-        $totalPrice = $cartProducts->sum('price');
-
-        return view('cart.viewCart', ['cartProducts' => $cartProducts, 'totalPrice' => $totalPrice]);
+        return redirect()->route('cart.view');
     }
 
     public function viewCart(Request $request)
     {
-
         $cart = $request->session()->get('cart', []);
+        $cartProducts = $this->getCartProducts($cart);
 
-        $cartProducts = Product::whereIn('id', $cart)->get();
-        
-        $totalPrice = $cartProducts->sum('price');
-
-        return view('cart.viewCart', ['cartProducts' => $cartProducts, 'totalPrice' => $totalPrice]);
+        return view('cart.viewCart', ['cartProducts' => $cartProducts]);
     }
 
     public function remove(Request $request, $id)
     {
-
         $cart = $request->session()->get('cart', []);
 
         $index = array_search($id, $cart);
         if ($index !== false) {
             unset($cart[$index]);
+            $request->session()->put('cart', $cart);
         }
-
-        $request->session()->put('cart', $cart);
 
         return redirect()->route('cart.view');
     }
 
     public function buy(Request $request)
     {
-        
         $cart = $request->session()->get('cart', []);
-       
-        $cartProducts = Product::whereIn('id', $cart)->get();
+        $cartProducts = $this->getCartProducts($cart);
 
-        $totalPrice = $cartProducts->sum('price');
+        $request->session()->forget('cart');
 
-        return view('cart.buy', ['cartProducts' => $cartProducts, 'totalPrice' => $totalPrice]);
-        
+        return view('cart.buy', ['cartProducts' => $cartProducts]);
+    }
+
+    private function getCartProducts($cart)
+    {
+        return Product::whereIn('id', $cart)->get();
     }
 }
+

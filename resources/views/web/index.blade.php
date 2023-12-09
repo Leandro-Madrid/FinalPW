@@ -56,7 +56,7 @@
                             Seleccionar categoría
                         </option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" @if ($selectedCategory == $category->id) selected @endif>
+                            <option value="{{ $category->id }}" @if (request()->get('category_id') == $category->id) selected @endif>
                                 {{ $category->name }}
                             </option>
                         @endforeach
@@ -98,7 +98,7 @@
                             @empty
                                 <tr>
                                     <td colspan="6">
-                                        @if ($selectedCategory)
+                                        @if (request()->get('category_id'))
                                             Todavía no hay productos cargados en esta categoría.
                                         @else
                                             Todavía no hay productos cargados.
@@ -109,7 +109,7 @@
                         </tbody>
                     </table>
                     <div class="text-center">
-                        {{ $products->links('pagination::bootstrap-5') }}
+                        {{ $products->appends(request()->except('page')) ->links('pagination::bootstrap-5') }}
                     </div>
 
 

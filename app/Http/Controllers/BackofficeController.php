@@ -25,7 +25,7 @@ class BackofficeController extends Controller
     {
         
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:250',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',

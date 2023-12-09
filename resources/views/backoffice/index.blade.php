@@ -66,7 +66,7 @@
                                         <img src="{{ asset('storage/' . $product->image) }}" alt="Imagen del producto" style="max-width: 100px; max-height: 100px;">
                                     </td>
                                     <td class="align-middle text-center">{{ $product->name }}</td>
-                                    <td class="align-middle text-center">{{ $product->description }}</td>
+                                    <td class="align-middle text-center">{{ \Str::limit($product->description, 45) }}</td>
                                     <td class="align-middle text-center">{{ $product->price }}</td>
                                     <td class="align-middle text-center">{{ $product->category->name }}</td>
                                     <td class="align-middle text-center">
